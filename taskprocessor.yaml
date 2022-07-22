@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taskprocessorsvc
+spec:
+  selector:
+    matchLabels:
+      run: taskprocessorsvc
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        run: taskprocessorsvc
+    spec:
+      containers:
+      - name: task-processor-service
+        image: nyeineisandarsoe/taskprocessorsvc:1.0.0
+        ports:
+        - containerPort: 5000
+        env: 
+         - name: RABBITMQ_HOST
+           value: "rabbitmq"
+         - name: RABBITMQ_PORT
+           value: "5672"
+         - name: RABBITMQ_USER
+           value: "guest"
+         - name: RABBITMQ_PASSWORD
+           value: "guest"
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: taskprocessorsvc
+  labels:
+    run: taskprocessorsvc
+spec:
+  ports:
+  - port: 5000
+  selector:
+    run: taskprocessorsvc

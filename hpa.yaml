@@ -1,0 +1,1 @@
+kubectl autoscale deployment taskprocessorsvc --cpu-percent=85 --max=3 --min=1

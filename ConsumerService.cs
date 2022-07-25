@@ -67,7 +67,7 @@ namespace TaskProcessor
             consumer.Unregistered += OnConsumerUnregistered;
             consumer.ConsumerCancelled += OnConsumerConsumerCancelled;
 
-            _channel.BasicConsume("greetings", false, consumer);
+            _channel.BasicConsume("tasks", false, consumer);
             return Task.CompletedTask;
         }
 
